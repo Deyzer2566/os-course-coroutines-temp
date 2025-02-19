@@ -42,7 +42,7 @@ jobs:
           else
               SAN="-fsanitize=${{ matrix.sanitizers }}"
           fi
-          bear -- make compile \
+          bear -- make coroutines \
             COMPILER=${{ matrix.compiler }} \
             OPTIMIZATION_LEVEL=${{ matrix.optimization_level }}\
             SANITIZERS="$SAN"
@@ -51,7 +51,7 @@ jobs:
         run: |
           for i in {1..4}; do
             echo "|- Running #$i..."
-            ./build/bin/app
+            ./coroutines
           done
 
       - name: Check Format
