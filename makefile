@@ -9,3 +9,14 @@ run: coroutines
 coroutines: $(CPP_FILES) $(ASM_FILES)
 	g++ $(CPP_FILES) $(ASM_FILES) -o coroutines
 
+check-style:
+	find . -iname '*.h' -iname '*.hpp' -o -iname '*.cpp' \
+	| xargs clang-tidy -p compile_commands.json
+
+check-format:
+	find . -iname '*.h' -iname '*.hpp' -o -iname '*.cpp' \
+	| xargs clang-format -Werror --dry-run --fallback-style=Google --verbose
+
+fix-format:
+	find . -iname '*.h' -iname '*.hpp' -o -iname '*.cpp' \
+	| xargs clang-format -i --fallback-style=Google --verbose
