@@ -4,6 +4,7 @@
 #include <setjmp.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <bitset>
 #include <chrono>
 #include <cstdio>
