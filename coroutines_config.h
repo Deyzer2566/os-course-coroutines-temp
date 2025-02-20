@@ -1,1 +1,1 @@
-#define MAX_POOL_SIZE 5
+enum { MAX_POOL_SIZE = 5 };
