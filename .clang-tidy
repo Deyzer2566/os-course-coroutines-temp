@@ -1,6 +1,19 @@
 ---
 Checks: >
-    *
+    -*,
+    bugprone-*,
+    clang-analyzer-*,
+    modernize-*,
+    performance-*,
+    readability-*,
+    portability-*,
+    -bugprone-narrowing-conversions,
+    -modernize-use-trailing-return-type,
+    -readability-identifier-length,
+    -readability-magic-numbers,
+    -modernize-pass-by-value,
+    -modernize-use-auto,
+    -modernize-use-using
 
 WarningsAsErrors: true
 CheckOptions:
