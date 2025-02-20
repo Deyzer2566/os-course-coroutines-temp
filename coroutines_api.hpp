@@ -8,15 +8,15 @@ using namespace std;
 template <class T, class R>
 class Generator {
 public:
-    Generator(std::function<T(R)> func, R start, R finish, R step) {
-        this->func = func;
-        this->start1 = start;
-        this->finish = finish;
-        this->current = start;
-        this->step = step;
-    }
+    Generator(std::function<T(R)> function, R start, R finish, R step)
+    : function(function)
+    , start1(start)
+    , finish(finish)
+    , step(step)
+    , current(start)
+    {}
     T next() {
-        T value = func(current);
+        T value = function(current);
         if(!isEnd()) {
             current += step;
         }
@@ -34,13 +34,13 @@ private:
     R finish;
     R current;
     R step;
-    std::function<T(R)> func;
+    std::function<T(R)> function;
 };
 template <class T, class R>
-Generator<T,R> yield(std::function<T(R)> func, R start, R finish, R step) {
-    return Generator<T,R>(func, start, finish, step);
+Generator<T,R> yield(std::function<T(R)> function, R start, R finish, R step) {
+    return Generator<T,R>(function, start, finish, step);
 }
-void await(std::function<int(int)> func, int param);
+void await(const std::function<int(int)>& function, int param);
 void coroutine_printf(int fd, const char* format, ...);
 void coroutine_write(int fd, void* buffer, size_t len);
 void coroutine_read(int fd, void* buffer, size_t len);

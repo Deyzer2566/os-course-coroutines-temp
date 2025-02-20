@@ -1,8 +1,10 @@
+#include <functional>
 #include <iostream>
+#include <vector>
 
 #include "coroutines.hpp"
 #include "coroutines_api.hpp"
-int lol(int a) {
+auto lol(int a) -> int {
   std::vector<int> multipliers;
   int b = a;
   Generator<int, int> nums =
@@ -11,17 +13,21 @@ int lol(int a) {
     if (b % i == 0) {
       multipliers.push_back(i);
       b /= i;
-    } else
+    } else {
       i = nums.next();
+    }
   }
   coroutine_printf(1, "Множители числа %d:", a);
-  for (int i = 0; i < multipliers.size(); i++)
-    coroutine_printf(1, "%d ", multipliers[i]);
+  for (int const multiplier : multipliers) {
+    coroutine_printf(1, "%d ", multiplier);
+  }
   coroutine_printf(1, "\n");
   return a + 1;
 }
-int main() {
-  for (int i = 15; i < 20; i++)
+
+auto main() -> int {
+  for (int i = 15; i < 20; i++) {
     new_coroutine(static_cast<std::function<int(int)>>(lol), i);
+  }
   coroutines_dispatcher();
 }

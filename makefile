@@ -13,6 +13,10 @@ check-style:
 	find . -iname '*.h' -iname '*.hpp' -o -iname '*.cpp' \
 	| xargs clang-tidy -p compile_commands.json
 
+fix-style:
+	find . -iname '*.h' -iname '*.hpp' -o -iname '*.cpp' \
+	| xargs clang-tidy --fix-errors -p compile_commands.json
+
 check-format:
 	find . -iname '*.h' -iname '*.hpp' -o -iname '*.cpp' \
 	| xargs clang-format -Werror --dry-run --fallback-style=Google --verbose

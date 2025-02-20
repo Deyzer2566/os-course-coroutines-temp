@@ -1,19 +1,19 @@
 ---
-Language: Cpp
-BasedOnStyle: Google
+Checks: >
+    *
 
-ColumnLimit: 100
-AccessModifierOffset: -2
+WarningsAsErrors: true
+CheckOptions:
+  - key: readability-identifier-length.MinimumNameLength
+    value: '3'
+  - key: readability-identifier-length.IgnoredVariableNames
+    value: 'i,j,k,x,y,z,id,dx,dy,dt'
+  - key: modernize-use-nullptr.NullMacros
+    value: 'NULL'
+  - key: modernize-loop-convert.MaxCopySize
+    value: '16'
+  - key: modernize-loop-convert.MinConfidence
+    value: reasonable
 
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-
-DerivePointerAlignment: false
-BreakConstructorInitializers: BeforeComma
-AlignAfterOpenBracket: BlockIndent
-
-BinPackArguments: false
-BinPackParameters: false
-
-AlignArrayOfStructures: Right
+HeaderFilterRegex: ''
+FormatStyle: file  # Использует стиль из .clang-format, если доступен
