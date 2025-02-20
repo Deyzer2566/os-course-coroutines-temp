@@ -13,7 +13,10 @@ Checks: >
     -readability-magic-numbers,
     -modernize-pass-by-value,
     -modernize-use-auto,
-    -modernize-use-using
+    -modernize-use-using,
+    -bugprone-easily-swappable-parameters,
+    -performance-enum-size,
+    -modernize-avoid-c-arrays
 
 WarningsAsErrors: true
 CheckOptions:

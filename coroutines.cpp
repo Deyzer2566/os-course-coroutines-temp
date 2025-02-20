@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <bitset>
 #include <chrono>
 #include <csetjmp>
