@@ -83,7 +83,7 @@ void wait() {
 }
 
 void update_coroutines_times(std::chrono::microseconds duration) {
-  for (coroutine it : coroutines) {
+  for (coroutine& it : coroutines) {
     std::chrono::microseconds* accumulator = it.getTimeAccumulator();
     if (accumulator != nullptr) {
       *it.getTimeAccumulator() += duration;
@@ -210,7 +210,8 @@ void coroutine_printf(int fd, const char* format, ...) {
 
 void coroutine_write(int fd, void* buffer, size_t len) {
   current_coroutine->state = coroutine::BLOCKED;
-  fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK);
+  int old_cntl = fcntl(fd, F_GETFL);
+  fcntl(fd, F_SETFL, old_cntl | O_NONBLOCK);
   char* pointer = static_cast<char*>(buffer);
   while (pointer < static_cast<char*>(buffer) + len) {
     ssize_t const w = write(fd, pointer, len - (pointer - static_cast<char*>(buffer)));
@@ -219,7 +220,7 @@ void coroutine_write(int fd, void* buffer, size_t len) {
     }
     wait();
   }
-  fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) & (~O_NONBLOCK));
+  fcntl(fd, F_SETFL, old_cntl);
   current_coroutine->state = coroutine::RUNNING;
 }
 
