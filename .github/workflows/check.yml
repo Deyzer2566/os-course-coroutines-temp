@@ -1,0 +1,62 @@
+name: Precommit
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        compiler:
+          - gcc
+          - clang
+        optimization_level: 
+          - -O0
+          - -O3
+        sanitizers:
+          - ''
+          - 'leak'
+
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install build-essential
+          sudo apt install gcc
+          sudo apt install clang clang-format clang-tidy
+          sudo apt install bear
+
+      - name: Build
+        run: |
+          if [[ -z "${{ matrix.sanitizers }}" ]]; then
+              SAN=""
+          else
+              SAN="-fsanitize=${{ matrix.sanitizers }}"
+          fi
+          bear -- make coroutines \
+            COMPILER=${{ matrix.compiler }} \
+            OPTIMIZATION_LEVEL=${{ matrix.optimization_level }}\
+            SANITIZERS="$SAN"
+
+      - name: Test
+        run: |
+          for i in {1..4}; do
+            echo "|- Running #$i..."
+            ./coroutines
+          done
+
+      - name: Check Format
+        run: make check-format
+
+      - name: Check style
+        run: make check-style
+

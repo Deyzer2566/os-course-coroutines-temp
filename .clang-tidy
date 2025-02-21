@@ -1,0 +1,35 @@
+---
+Checks: >
+    -*,
+    bugprone-*,
+    clang-analyzer-*,
+    modernize-*,
+    performance-*,
+    readability-*,
+    portability-*,
+    -bugprone-narrowing-conversions,
+    -modernize-use-trailing-return-type,
+    -readability-identifier-length,
+    -readability-magic-numbers,
+    -modernize-pass-by-value,
+    -modernize-use-auto,
+    -modernize-use-using,
+    -bugprone-easily-swappable-parameters,
+    -performance-enum-size,
+    -modernize-avoid-c-arrays
+
+WarningsAsErrors: true
+CheckOptions:
+  - key: readability-identifier-length.MinimumNameLength
+    value: '3'
+  - key: readability-identifier-length.IgnoredVariableNames
+    value: 'i,j,k,x,y,z,id,dx,dy,dt'
+  - key: modernize-use-nullptr.NullMacros
+    value: 'NULL'
+  - key: modernize-loop-convert.MaxCopySize
+    value: '16'
+  - key: modernize-loop-convert.MinConfidence
+    value: reasonable
+
+HeaderFilterRegex: ''
+FormatStyle: file  # Использует стиль из .clang-format, если доступен
